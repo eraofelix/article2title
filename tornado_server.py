@@ -5,12 +5,18 @@ from tornado.web import RequestHandler, Application
 from tornado.ioloop import IOLoop
 
 
+def get_title(article):
+
+    return 'not implement yet~'
+
+
 class MainHandler(RequestHandler):
     def get(self):
         article = RequestHandler.get_argument(self, name='article')
-        print('artlcle reveieved:', article, ', title_pred is:---------')
+        print('article reveieved:' + str(article))
         # test sum to get title
-        self.write('artlcle reveieved, title_pred is:---------\n')
+        title = get_title(article)
+        self.write(str(article) + '->'+ title+'\n')
 
 
 if __name__ == '__main__':
