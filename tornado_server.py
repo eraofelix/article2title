@@ -11,9 +11,7 @@ import time
 from googletrans import Translator
 
 translator = Translator()
-
 lock = Lock()
-
 # 1, build model
 with open("args.pickle", "rb") as f:
     args = pickle.load(f)
