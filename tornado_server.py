@@ -33,6 +33,8 @@ class MainHandler(RequestHandler):
         article = RequestHandler.get_argument(self, name='article')
         article = translator.translate(article, src='auto', dest='en').text.lower().replace('.', ' .').replace(',', ' ,')
 
+        print('---article:', article)
+
         print("Loading dictionary...")
         word_dict, reversed_dict, article_max_len, summary_max_len = build_dict("valid", args.toy)
         valid_x, valid_y = build_deploy(article, word_dict, article_max_len, summary_max_len)
