@@ -8,13 +8,15 @@ import pickle
 from model import Model
 from utils import build_dict, build_dataset, batch_iter, build_deploy
 import time
+from googletrans import Translator
+
+translator = Translator()
 
 lock = Lock()
 
 # 1, build model
 with open("args.pickle", "rb") as f:
     args = pickle.load(f)
-
 
 print("Loading dictionary...")
 word_dict, reversed_dict, article_max_len, summary_max_len = build_dict("valid", args.toy)
@@ -31,6 +33,7 @@ print('load model time:', str(time.time() - t1) + 's')
 class MainHandler(RequestHandler):
     def get(self):
         article = RequestHandler.get_argument(self, name='article')
+        article = translator.translate(article, src='auto', dest='en').text.lower().replace('.', ' .').replace(',', ' ,')
 
         print("Loading dictionary...")
         word_dict, reversed_dict, article_max_len, summary_max_len = build_dict("valid", args.toy)
@@ -60,7 +63,10 @@ class MainHandler(RequestHandler):
                 if word not in summary:
                     summary.append(word)
             title_pred = " ".join(summary)
-            self.write(str(title_pred) + '\n')
+            print('title_pred:', title_pred)
+            title_cn = translator.translate(title_pred, src='auto', dest='zh-cn').text
+            print('title_cn:', title_cn)
+            self.write(str(title_cn) + '\n')
 
 
 if __name__ == '__main__':
