@@ -31,6 +31,7 @@ print('load model time:', str(time.time() - t1) + 's')
 
 class MainHandler(RequestHandler):
     def post(self):
+        print('enter post')
         try:
             article = RequestHandler.get_argument(self, name='article')
             audio = RequestHandler.get_argument(self, name='audio')
