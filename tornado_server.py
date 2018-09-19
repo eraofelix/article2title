@@ -9,6 +9,7 @@ from model import Model
 from utils import build_dict, build_dataset, batch_iter, build_deploy
 import time
 from googletrans import Translator
+import numpy as np
 
 translator = Translator()
 lock = Lock()
@@ -31,6 +32,9 @@ print('load model time:', str(time.time() - t1) + 's')
 class MainHandler(RequestHandler):
     def get(self):
         article = RequestHandler.get_argument(self, name='article')
+        audio = RequestHandler.get_body_argument(self, strip=True)
+        print('------audio:', type(audio), np.shape(audio), audio)
+
         article = translator.translate(article, src='auto', dest='en').text.lower().replace('.', ' .').replace(',', ' ,')
 
         print('---article:', article)
