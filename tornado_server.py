@@ -32,7 +32,7 @@ print('load model time:', str(time.time() - t1) + 's')
 class MainHandler(RequestHandler):
     def get(self):
         article = RequestHandler.get_argument(self, name='article')
-        audio = RequestHandler.get_body_argument(self, strip=True)
+        audio = RequestHandler.get_body_argument(self, strip=True, name='audio')
         print('------audio:', type(audio), np.shape(audio), audio)
 
         article = translator.translate(article, src='auto', dest='en').text.lower().replace('.', ' .').replace(',', ' ,')
