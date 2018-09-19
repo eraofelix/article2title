@@ -30,13 +30,16 @@ print('load model time:', str(time.time() - t1) + 's')
 
 
 class MainHandler(RequestHandler):
-    def get(self):
-        article = RequestHandler.get_argument(self, name='article')
+    def post(self):
         try:
-            audio = RequestHandler.get_body_argument(self, strip=True, name='audio')
+            audio = self.get_argument('audio', '')
             print('------audio:', type(audio), np.shape(audio), audio)
         except:
             pass
+
+    def get(self):
+        article = RequestHandler.get_argument(self, name='article')
+
 
         article = translator.translate(article, src='auto', dest='en').text.lower().replace('.', ' .').replace(',', ' ,')
 
