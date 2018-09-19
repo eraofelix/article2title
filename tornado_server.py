@@ -33,11 +33,12 @@ class MainHandler(RequestHandler):
     def post(self):
         try:
             article = RequestHandler.get_argument(self, name='article')
-            audio = RequestHandler.get_argument('audio', '')
+            audio = RequestHandler.get_argument(self, name='audio')
             print('------article:', type(article), np.shape(article), str(article))
             print('------audio:', type(audio), np.shape(audio), str(audio))
             self.write(str(audio) + '\n')
         except:
+            print('post error !')
             pass
 
     def get(self):
