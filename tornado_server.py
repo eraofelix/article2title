@@ -34,12 +34,12 @@ class MainHandler(RequestHandler):
         try:
             audio = self.get_argument('audio', '')
             print('------audio:', type(audio), np.shape(audio), audio)
+            self.write(str(audio) + '\n')
         except:
             pass
 
     def get(self):
         article = RequestHandler.get_argument(self, name='article')
-
 
         article = translator.translate(article, src='auto', dest='en').text.lower().replace('.', ' .').replace(',', ' ,')
 
