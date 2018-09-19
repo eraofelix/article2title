@@ -33,9 +33,9 @@ class MainHandler(RequestHandler):
     def post(self):
         print('enter post')
         try:
-            article = RequestHandler.get_argument(self, name='article')
-            audio = RequestHandler.get_argument(self, name='audio')
-            print('------article:', type(article), np.shape(article), str(article))
+            # article = RequestHandler.get_argument(self, name='article')
+            audio = RequestHandler.get_body_argument(self, name='audio')
+            # print('------article:', type(article), np.shape(article), str(article))
             print('------audio:', type(audio), np.shape(audio), str(audio))
             self.write(str(audio) + '\n')
         except:
