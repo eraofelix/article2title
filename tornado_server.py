@@ -32,7 +32,9 @@ print('load model time:', str(time.time() - t1) + 's')
 class MainHandler(RequestHandler):
     def post(self):
         try:
-            audio = self.get_argument('audio', '')
+            article = RequestHandler.get_argument(self, name='article')
+            audio = RequestHandler.get_argument('audio', '')
+            print('------article:', type(article), np.shape(article), str(article))
             print('------audio:', type(audio), np.shape(audio), str(audio))
             self.write(str(audio) + '\n')
         except:
