@@ -31,7 +31,7 @@ print('load model time:', str(time.time() - t1) + 's')
 
 class MainHandler(RequestHandler):
     def post(self):
-        print('enter post')
+        print('enter post...')
         try:
             # article = RequestHandler.get_argument(self, name='article')
             audio = RequestHandler.get_body_argument(self, name='audio')
@@ -44,7 +44,12 @@ class MainHandler(RequestHandler):
 
     def get(self):
         article = RequestHandler.get_argument(self, name='article')
-
+        print('enter get...')
+        try:
+            print('article in get:', article)
+        except:
+            print('receieve get but cannot print')
+            pass
         article = translator.translate(article, src='auto', dest='en').text.lower().replace('.', ' .').replace(',', ' ,')
         # print('---article:', article)
 
