@@ -36,6 +36,7 @@ class MainHandler(RequestHandler):
             audio = RequestHandler.get_body_argument(self, name='audio')
             print('------audio:', type(audio), np.shape(audio), str(audio))
             self.write(str(audio) + '\n')
+
         except:
             print('receieve post but something error')
             pass

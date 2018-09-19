@@ -66,8 +66,8 @@ def build_deploy(str_from, word_dict, article_max_len, summary_max_len):
     article_list = []
     article_list.append(str_from)
     title_list = ['hello']
-    print('-----article_list:', len(article_list), type(article_list), np.shape(article_list))
-    print('-----article_list[0]:', len(article_list[0]), type(article_list[0]), np.shape(article_list[0]))
+    # print('-----article_list:', len(article_list), type(article_list), np.shape(article_list))
+    # print('-----article_list[0]:', len(article_list[0]), type(article_list[0]), np.shape(article_list[0]))
 
     x = list(map(lambda d: word_tokenize(d), article_list))
     x = list(map(lambda d: list(map(lambda w: word_dict.get(w, word_dict["<unk>"]), d)), x))
