@@ -72,14 +72,14 @@ class MainHandler(RequestHandler):
     def get(self):
         article = RequestHandler.get_argument(self, name='article')
         print('-----------------enter get...')
+        article = translator.translate(article, src='auto', dest='en').text.lower().replace('.', ' .').replace(',', ' ,')
+
         try:
-            print('article_cn in get:', article)
+            print('---article_cn in get:', article)
+            print('---article_en:', article)
         except Exception as e:
             print(str(e))
             pass
-        article = translator.translate(article, src='auto', dest='en').text.lower().replace('.', ' .').replace(',', ' ,')
-
-        print('---article_en:', article)
 
         print("Loading dictionary...")
         word_dict, reversed_dict, article_max_len, summary_max_len = build_dict("valid", args.toy)
