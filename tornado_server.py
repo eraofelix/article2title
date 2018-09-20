@@ -37,9 +37,8 @@ fs = 16000
 profile_ids = ['aabd9804-3c66-46d1-b8d3-4598b8aca4d8',
                     '7874fb49-1c07-493c-b948-a496d6b1d1a9',
                     'cce7883d-51b8-45aa-8474-1e6b987e5dbf',
-                    '45d05da9-3e33-4030-bfd1-5dae7e9f9e10',
-                    '9213a6c5-739a-4b2f-95af-322759a0f9dc']
-profile_nms = ['kai', 'kun', 'wenpeng', 'zhengwei', 'gongjing']
+               '40bb2f18-1f20-4107-a915-b6ff3391fbdb']
+profile_nms = ['kai', 'kun', 'wenpeng', 'gongjing']
 
 class MainHandler(RequestHandler):
     def post(self):
