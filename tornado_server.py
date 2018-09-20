@@ -82,6 +82,7 @@ class MainHandler(RequestHandler):
                 self.write(name + '\n')
             else:
                 print('id not in profile_ids')
+                self.write('stranger' + '\n')
 
             # name = profile_nms[idx] if id in profile_ids else 'stranger'
             # print('声纹鉴定结果:', name)
