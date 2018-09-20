@@ -10,6 +10,10 @@ from utils import build_dict, build_dataset, batch_iter, build_deploy
 import time
 from googletrans import Translator
 import numpy as np
+import IdentificationServiceHttpClientHelper
+import os
+import sounddevice as sd
+import soundfile as sf
 
 translator = Translator()
 lock = Lock()
@@ -28,14 +32,44 @@ ckpt = tf.train.get_checkpoint_state("./saved_model/")
 saver.restore(sess, ckpt.model_checkpoint_path)
 print('load model time:', str(time.time() - t1) + 's')
 
+filePath = './data/tmp.wav'
+fs = 16000
+
+profile_ids = ['aabd9804-3c66-46d1-b8d3-4598b8aca4d8',
+                            '7874fb49-1c07-493c-b948-a496d6b1d1a9',
+                            'cce7883d-51b8-45aa-8474-1e6b987e5dbf',
+                            'cb86bd34-55fb-41b2-8995-02c6f170672a',
+                            'cc4c4bee-adab-47f1-91f3-d45b961f09c5']
+profile_nms = ['kai', 'kun', 'wenpeng', 'gongjing', 'zhengwei']
 
 class MainHandler(RequestHandler):
     def post(self):
         print('enter post...')
         try:
-            audio = RequestHandler.get_body_argument(self, name='audio')
+            audio = RequestHandler.get_body_argument(self, name='audio')  # '1,1,1,...,11,2'
             print('------audio:', type(audio), np.shape(audio), str(audio))
-            self.write(str(audio) + '\n')
+            # self.write(str(audio) + '\n')
+
+            audio_lst_str = audio.split(',')  # [str*32000]
+            audio_lst_int = [int(i) for i in audio_lst_str]
+            print('------audio_lst_int:', type(audio_lst_int), np.shape(audio_lst_int))
+            audio_array = np.asarray(audio_lst_int)
+            print('------audio_array:', type(audio_array), np.shape(audio_array))
+
+            try:
+                os.remove(filePath)
+            except OSError:
+                pass
+            sf.write(filePath, audio_array, fs)
+
+            helper = IdentificationServiceHttpClientHelper.IdentificationServiceHttpClientHelper('ccc2411ed1bb496fbc3aaf42540e81ac')
+            identification_response = helper.identify_file(filePath, profile_ids, 'true')
+            id = identification_response.get_identified_profile_id()
+            print('current profile_id:', id)
+            name = profile_nms[profile_ids.index(id)] if id in profile_ids else 'stranger'
+            print('声纹鉴定结果:', name)
+            print('鉴定confidence：', identification_response.get_confidence())
+            self.write(name + '\n')
 
         except:
             print('receieve post but something error')
