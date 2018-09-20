@@ -32,7 +32,7 @@ ckpt = tf.train.get_checkpoint_state("./saved_model/")
 saver.restore(sess, ckpt.model_checkpoint_path)
 print('load model time:', str(time.time() - t1) + 's')
 
-filePath = './data/tmp.wav'
+filePath = 'tmp.wav'
 fs = 16000
 
 profile_ids = ['aabd9804-3c66-46d1-b8d3-4598b8aca4d8',
