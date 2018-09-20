@@ -47,7 +47,7 @@ class MainHandler(RequestHandler):
         print('enter post...')
         try:
             audio = RequestHandler.get_body_argument(self, name='audio')  # '1,1,1,...,11,2'
-            print('------audio:', type(audio), np.shape(audio), str(audio))
+            # print('------audio:', type(audio), np.shape(audio), str(audio))
             # self.write(str(audio) + '\n')
 
             audio_lst_str = audio.split(',')  # [str*32000]
@@ -60,12 +60,17 @@ class MainHandler(RequestHandler):
                 os.remove(filePath)
             except OSError:
                 pass
+            print('1')
             sf.write(filePath, audio_array, fs)
-
+            print('2')
             helper = IdentificationServiceHttpClientHelper.IdentificationServiceHttpClientHelper('ccc2411ed1bb496fbc3aaf42540e81ac')
+            print('3')
             identification_response = helper.identify_file(filePath, profile_ids, 'true')
+            print('4')
             id = identification_response.get_identified_profile_id()
+            print('5')
             print('current profile_id:', id)
+
             name = profile_nms[profile_ids.index(id)] if id in profile_ids else 'stranger'
             print('声纹鉴定结果:', name)
             print('鉴定confidence：', identification_response.get_confidence())
