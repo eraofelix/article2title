@@ -111,7 +111,7 @@ class MainHandler(RequestHandler):
             title_pred = " ".join(summary)
             print('title_pred:', title_pred)
             title_cn = translator.translate(title_pred, src='auto', dest='zh-cn').text
-            print('title_cn:', title_cn)
+            # print('title_cn:', title_cn)
             self.write(str(title_cn) + '\n')
 
 
