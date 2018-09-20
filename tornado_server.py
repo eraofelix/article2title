@@ -46,47 +46,23 @@ class MainHandler(RequestHandler):
         print('enter post...')
         try:
             audio = RequestHandler.get_body_argument(self, name='audio')  # '1,1,1,...,11,2'
-            # print('------audio:', type(audio), np.shape(audio), str(audio))
-            # self.write(str(audio) + '\n')
-
             audio_lst_str = audio.split(',')  # [str*32000]
             audio_lst_int = [float(i) for i in audio_lst_str]
-            print('------audio_lst_int:', type(audio_lst_int), np.shape(audio_lst_int))
             audio_array = np.asarray(audio_lst_int)
             audio_array = np.expand_dims(audio_array, axis=1)
-            print('------audio_array:', type(audio_array), np.shape(audio_array))
-
             try:
                 os.remove(filePath)
             except OSError:
                 pass
-            print('1')
             sf.write(filePath, audio_array, fs)
-            print('2')
             helper = IdentificationServiceHttpClientHelper.IdentificationServiceHttpClientHelper('ccc2411ed1bb496fbc3aaf42540e81ac')
-            print('3')
             identification_response = helper.identify_file(filePath, profile_ids, 'true')
-            print('4')
             id = identification_response.get_identified_profile_id()
-            print('5')
-            print('current profile_id:', id)
 
-            if id in profile_ids:
-                print('id:', id)
-                idx = profile_ids.index(id)
-                print('idx:', idx)
-                name = profile_nms[idx]
-                print('id result:', name)
-                print('confidence:', identification_response.get_confidence())
-                self.write(name + '\n')
-            else:
-                print('id not in profile_ids')
-                self.write('stranger' + '\n')
-
-            # name = profile_nms[idx] if id in profile_ids else 'stranger'
-            # print('声纹鉴定结果:', name)
-            # print('鉴定confidence：', identification_response.get_confidence())
-            # self.write(name + '\n')
+            name = profile_nms[profile_ids.index(id)] if id in profile_ids else 'stranger'
+            print('result:', name)
+            print('confidence:', identification_response.get_confidence())
+            self.write(name + '\n')
 
         except Exception as e:
             print('receieve post but something error:' + str(e))
