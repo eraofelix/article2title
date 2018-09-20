@@ -88,8 +88,8 @@ class MainHandler(RequestHandler):
             # print('鉴定confidence：', identification_response.get_confidence())
             # self.write(name + '\n')
 
-        except:
-            print('receieve post but something error')
+        except Exception as e:
+            print('receieve post but something error:' + str(e))
             pass
 
     def get(self):
