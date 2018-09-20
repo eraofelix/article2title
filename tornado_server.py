@@ -77,7 +77,7 @@ class MainHandler(RequestHandler):
                 print('idx:', idx)
                 name = profile_nms[idx]
                 print('id result:', name)
-                print('confidence：', identification_response.get_confidence())
+                print('confidence:', identification_response.get_confidence())
                 self.write(name + '\n')
             else:
                 print('id not in profile_ids')
