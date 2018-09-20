@@ -54,6 +54,7 @@ class MainHandler(RequestHandler):
             audio_lst_int = [int(i) for i in audio_lst_str]
             print('------audio_lst_int:', type(audio_lst_int), np.shape(audio_lst_int))
             audio_array = np.asarray(audio_lst_int)
+            audio_array = np.expand_dims(audio_array, axis=1)
             print('------audio_array:', type(audio_array), np.shape(audio_array))
 
             try:
