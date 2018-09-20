@@ -43,7 +43,7 @@ profile_nms = ['kai', 'kun', 'wenpeng', 'gongjing', 'zhengwei']
 
 class MainHandler(RequestHandler):
     def post(self):
-        print('enter post...')
+        print('---------------enter post...')
         try:
             audio = RequestHandler.get_body_argument(self, name='audio')  # '1,1,1,...,11,2'
             audio_lst_str = audio.split(',')  # [str*32000]
@@ -61,16 +61,17 @@ class MainHandler(RequestHandler):
 
             name = profile_nms[profile_ids.index(id)] if id in profile_ids else 'stranger'
             print('result:', name)
-            print('confidence:', identification_response.get_confidence())
+            print('c onfidence:', identification_response.get_confidence())
             self.write(name + '\n')
 
         except Exception as e:
             print('receieve post but something error:' + str(e))
+            self.write('error' + '\n')
             pass
 
     def get(self):
         article = RequestHandler.get_argument(self, name='article')
-        print('enter get...')
+        print('-----------------enter get...')
         try:
             print('article in get:', article)
         except:
