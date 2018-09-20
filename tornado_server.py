@@ -72,10 +72,21 @@ class MainHandler(RequestHandler):
             print('5')
             print('current profile_id:', id)
 
-            name = profile_nms[profile_ids.index(id)] if id in profile_ids else 'stranger'
-            print('声纹鉴定结果:', name)
-            print('鉴定confidence：', identification_response.get_confidence())
-            self.write(name + '\n')
+            if id in profile_ids:
+                print('id:', id)
+                idx = profile_ids.index(id)
+                print('idx:', idx)
+                name = profile_nms[idx]
+                print('声纹鉴定结果:', name)
+                print('鉴定confidence：', identification_response.get_confidence())
+                self.write(name + '\n')
+            else:
+                print('id not in profile_ids')
+
+            # name = profile_nms[idx] if id in profile_ids else 'stranger'
+            # print('声纹鉴定结果:', name)
+            # print('鉴定confidence：', identification_response.get_confidence())
+            # self.write(name + '\n')
 
         except:
             print('receieve post but something error')
