@@ -51,7 +51,7 @@ class MainHandler(RequestHandler):
             # self.write(str(audio) + '\n')
 
             audio_lst_str = audio.split(',')  # [str*32000]
-            audio_lst_int = [int(i) for i in audio_lst_str]
+            audio_lst_int = [float(i) for i in audio_lst_str]
             print('------audio_lst_int:', type(audio_lst_int), np.shape(audio_lst_int))
             audio_array = np.asarray(audio_lst_int)
             audio_array = np.expand_dims(audio_array, axis=1)
