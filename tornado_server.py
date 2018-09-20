@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 from threading import Thread, Lock
 from tornado.web import RequestHandler, Application
 from tornado.ioloop import IOLoop
@@ -77,8 +76,8 @@ class MainHandler(RequestHandler):
                 idx = profile_ids.index(id)
                 print('idx:', idx)
                 name = profile_nms[idx]
-                print('声纹鉴定结果:', name)
-                print('鉴定confidence：', identification_response.get_confidence())
+                print('id result:', name)
+                print('confidence：', identification_response.get_confidence())
                 self.write(name + '\n')
             else:
                 print('id not in profile_ids')
