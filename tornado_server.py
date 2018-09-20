@@ -73,12 +73,13 @@ class MainHandler(RequestHandler):
         article = RequestHandler.get_argument(self, name='article')
         print('-----------------enter get...')
         try:
-            print('article in get:', article)
-        except:
-            print('receieve get but cannot print')
+            print('article_cn in get:', article)
+        except Exception as e:
+            print(str(e))
             pass
         article = translator.translate(article, src='auto', dest='en').text.lower().replace('.', ' .').replace(',', ' ,')
-        # print('---article:', article)
+
+        print('---article_en:', article)
 
         print("Loading dictionary...")
         word_dict, reversed_dict, article_max_len, summary_max_len = build_dict("valid", args.toy)
@@ -110,7 +111,7 @@ class MainHandler(RequestHandler):
             title_pred = " ".join(summary)
             print('title_pred:', title_pred)
             title_cn = translator.translate(title_pred, src='auto', dest='zh-cn').text
-            # print('title_cn:', title_cn)
+            print('title_cn:', title_cn)
             self.write(str(title_cn) + '\n')
 
 

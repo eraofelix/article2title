@@ -4,6 +4,7 @@ from model import Model
 from utils import build_dict, build_dataset, batch_iter
 import numpy as np
 
+
 with open("args.pickle", "rb") as f:
     args = pickle.load(f)
 
